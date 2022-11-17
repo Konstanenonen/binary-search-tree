@@ -24,8 +24,6 @@ function TreeFactory(array) {
       .filter((item, index, self) => self.indexOf(item) === index)
       .sort((a, b) => a - b);
 
-    console.log(sanitizedArray);
-
     return sortedArrayToBST(sanitizedArray, 0, sanitizedArray.length - 1);
   };
 
