@@ -49,6 +49,14 @@ function TreeFactory(array) {
         return null;
       }
 
+      if (node.data === value && node.left === null) {
+        return node.right;
+      }
+
+      if (node.data === value && node.right === null) {
+        return node.left;
+      }
+
       if (node.data > value) node.left = removeNode(node.left);
 
       if (node.data < value) node.right = removeNode(node.right);
