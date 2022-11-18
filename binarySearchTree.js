@@ -44,27 +44,39 @@ function TreeFactory(array) {
   };
 
   const remove = (value) => {
-    const removeNode = (node) => {
-      if (node.data === value && node.left === null && node.right === null) {
+    const removeNode = (node, val) => {
+      if (node.data > val) node.left = removeNode(node.left, val);
+      if (node.data < val) node.right = removeNode(node.right, val);
+
+      if (node.data === val && node.left === null && node.right === null) {
         return null;
       }
 
-      if (node.data === value && node.left === null) {
+      if (node.data === val && node.left === null) {
         return node.right;
       }
 
-      if (node.data === value && node.right === null) {
+      if (node.data === val && node.right === null) {
         return node.left;
       }
 
-      if (node.data > value) node.left = removeNode(node.left);
-
-      if (node.data < value) node.right = removeNode(node.right);
+      if (node.data === val && node.right !== null && node.left !== null) {
+        const minValue = (n) => {
+          let minv = n.data;
+          while (n.left !== null) {
+            minv = n.left.data;
+            n = n.left;
+          }
+          return minv;
+        };
+        node.data = minValue(node.right);
+        node.right = removeNode(node.right, node.data);
+      }
 
       return node;
     };
 
-    removeNode(root);
+    removeNode(root, value);
   };
 
   const find = (value) => {
@@ -98,6 +110,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-const tree = TreeFactory([1, 4, 2, 3, 3, 6, 7, 5, 8, 9]);
+const tree = TreeFactory([1, 4, 2, 3, 3, 6, 7, 5, 8, 9, 10, 11, 12, 13, 14]);
 
 prettyPrint(tree.root);
