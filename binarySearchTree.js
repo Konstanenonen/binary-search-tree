@@ -29,9 +29,23 @@ function TreeFactory(array) {
 
   const root = buildTree(array);
 
+  const find = (value) => {
+    const findFromTree = (node, val) => {
+      if (node.data === null || node.data === val) return node;
+
+      if (node.data > val) return findFromTree(node.left, val);
+
+      if (node.data < val) return findFromTree(node.right, val);
+    };
+
+    return findFromTree(root, value);
+  };
+
   return {
     root,
     buildTree,
+    find,
+    insert,
   };
 }
 
@@ -44,3 +58,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 };
+
+const tree = TreeFactory([1, 4, 2, 3, 3, 6, 7, 5, 8, 9]);
+
+prettyPrint(tree.root);
