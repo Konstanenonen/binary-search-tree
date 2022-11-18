@@ -31,7 +31,7 @@ function TreeFactory(array) {
 
   const find = (value) => {
     const findFromTree = (node, val) => {
-      if (node.data === null || node.data === val) return node;
+      if (node === null || node.data === val) return node;
 
       if (node.data > val) return findFromTree(node.left, val);
 
@@ -45,7 +45,6 @@ function TreeFactory(array) {
     root,
     buildTree,
     find,
-    insert,
   };
 }
 
