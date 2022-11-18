@@ -43,6 +43,22 @@ function TreeFactory(array) {
     insertToTree(root);
   };
 
+  const remove = (value) => {
+    const removeNode = (node) => {
+      if (node.data === value && node.left === null && node.right === null) {
+        return null;
+      }
+
+      if (node.data > value) node.left = removeNode(node.left);
+
+      if (node.data < value) node.right = removeNode(node.right);
+
+      return node;
+    };
+
+    removeNode(root);
+  };
+
   const find = (value) => {
     const findFromTree = (node) => {
       if (node === null || node.data === value) return node;
@@ -59,6 +75,7 @@ function TreeFactory(array) {
     root,
     buildTree,
     insert,
+    remove,
     find,
   };
 }
