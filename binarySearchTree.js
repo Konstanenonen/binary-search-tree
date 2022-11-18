@@ -29,21 +29,36 @@ function TreeFactory(array) {
 
   const root = buildTree(array);
 
-  const find = (value) => {
-    const findFromTree = (node, val) => {
-      if (node === null || node.data === val) return node;
+  const insert = (value) => {
+    const insertToTree = (node) => {
+      if (node === null) return NodeFactory(value);
 
-      if (node.data > val) return findFromTree(node.left, val);
+      if (node.data > value) node.left = insertToTree(node.left);
 
-      if (node.data < val) return findFromTree(node.right, val);
+      if (node.data < value) node.right = insertToTree(node.right);
+
+      return node;
     };
 
-    return findFromTree(root, value);
+    insertToTree(root);
+  };
+
+  const find = (value) => {
+    const findFromTree = (node) => {
+      if (node === null || node.data === value) return node;
+
+      if (node.data > value) return findFromTree(node.left);
+
+      if (node.data < value) return findFromTree(node.right);
+    };
+
+    return findFromTree(root);
   };
 
   return {
     root,
     buildTree,
+    insert,
     find,
   };
 }
